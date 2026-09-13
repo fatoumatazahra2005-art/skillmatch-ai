@@ -17,4 +17,11 @@ class Skill extends Model
             ->withPivot('level', 'years_experience')
             ->withTimestamps();
     }
+
+    public function opportunities()
+    {
+        return $this->belongsToMany(Opportunity::class, 'opportunity_skills')
+            ->withPivot('level')
+            ->withTimestamps();
+    }
 }
