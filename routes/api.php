@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobMatchController;
+use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSkillController;
 use Illuminate\Http\Request;
@@ -29,3 +30,8 @@ Route::post(
 )->middleware('auth:sanctum');
 Route::get('/profile', [ProfileController::class, 'getMyProfile'])
     ->middleware('auth:sanctum');
+
+Route::post('/opportunities', [OpportunityController::class, 'create'])
+    ->middleware('auth:sanctum');
+
+Route::get('/opportunities', [OpportunityController::class, 'getAll']);
