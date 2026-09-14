@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobMatchController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,6 @@ Route::post(
     '/profiles/{profile}/opportunities/{opportunity}/match',
     [JobMatchController::class, 'match']
 )->middleware('auth:sanctum');
+
+Route::post('/profile', [ProfileController::class, 'createOrUpdate'])
+    ->middleware('auth:sanctum');
