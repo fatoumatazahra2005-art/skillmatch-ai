@@ -29,4 +29,11 @@ class ProfileService
         return $profile;
     }
 
+    public function getMyProfile(Request $request)
+    {
+        return Profile::with('skills')
+            ->where('user_id', $request->user()->id)
+            ->first();
+    }
+
 }

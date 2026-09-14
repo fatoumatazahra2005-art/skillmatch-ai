@@ -16,4 +16,9 @@ class ProfileController extends Controller
     {
         return $this->profileService->createOrUpdate($request);
     }
+
+    public function getMyProfile(Request $request)
+    {
+        return $this->profileService->getMyProfile($request);
+    }
 }
