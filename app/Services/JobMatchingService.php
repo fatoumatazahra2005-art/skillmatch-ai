@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\JobMatch;
 use App\Models\Opportunity;
 use App\Models\Profile;
+use Illuminate\Http\Request;
 
 class JobMatchingService
 {
@@ -51,5 +52,17 @@ class JobMatchingService
         );
 
         return $result;
+    }
+
+    public function getByProfile(Profile $profile, Request $request)
+    {
+        if ($profile->user_id !== $request->user()->id) {
+            abort(403, 'Vous ne pouvez pas consulter les matchs de ce profil.');
+        }
+
+        return JobMatch::with('opportunity')
+            ->where('profile_id', $profile->id)
+            ->orderByDesc('score')
+            ->get();
     }
 }

@@ -44,3 +44,7 @@ Route::get(
     '/opportunities/{opportunity}',
     [OpportunityController::class, 'getById']
 );
+Route::get(
+    '/profiles/{profile}/job-matches',
+    [JobMatchController::class, 'getByProfile']
+)->middleware('auth:sanctum');

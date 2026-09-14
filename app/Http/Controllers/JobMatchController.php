@@ -21,5 +21,12 @@ class JobMatchController extends Controller
             $opportunity
         );
     }
+    public function getByProfile(Profile $profile, Request $request)
+    {
+        return $this->jobMatchingService->getByProfile(
+            $profile,
+            $request
+        );
+    }
 
 }
