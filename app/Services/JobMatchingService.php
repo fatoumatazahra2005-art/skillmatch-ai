@@ -5,9 +5,15 @@ use App\Models\JobMatch;
 use App\Models\Opportunity;
 use App\Models\Profile;
 use Illuminate\Http\Request;
+use App\Services\AIService;
 
 class JobMatchingService
 {
+
+    public function __construct(
+        private AIService $aiService
+    ) {
+    }
     public function calculate(Profile $profile, Opportunity $opportunity)
     {
         $profileSkills = $profile->skills;
@@ -28,9 +34,17 @@ class JobMatchingService
             ? ($matchedSkills->count() / $opportunitySkills->count()) * 100
             : 0;
 
-        $explanation = $score == 100
+        $aiAnalysis = $this->aiService->analyzeJobMatch(
+            $profileSkills->pluck('name')->values()->all(),
+            $opportunitySkills->pluck('name')->values()->all()
+        );
+
+        $explanation = $aiAnalysis['explanation'] ?? (
+        $score == 100
             ? 'Le profil possède toutes les compétences demandées par cette opportunité.'
-            : 'Le profil possède ' . count($matchedSkillNames) . ' compétence(s) demandée(s) sur ' . $opportunitySkills->count() . '.';
+            : 'Le profil possède ' . count($matchedSkillNames) . ' compétence(s) demandée(s) sur ' . $opportunitySkills->count() . '.'
+        );
+
 
         $result = [
             'score' => round($score, 2),
