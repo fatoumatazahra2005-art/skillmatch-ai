@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Opportunity;
 use App\Services\OpportunityService;
 use Illuminate\Http\Request;
 
@@ -20,5 +21,10 @@ class OpportunityController extends Controller
     public function getAll()
     {
         return $this->opportunityService->getAll();
+    }
+
+    public function getById(Opportunity $opportunity)
+    {
+        return $this->opportunityService->getById($opportunity);
     }
 }

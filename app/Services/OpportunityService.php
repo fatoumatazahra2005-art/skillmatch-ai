@@ -25,4 +25,9 @@ class OpportunityService
         return Opportunity::with('skills')->get();
     }
 
+    public function getById(Opportunity $opportunity)
+    {
+        return $opportunity->load('skills');
+    }
+
 }
