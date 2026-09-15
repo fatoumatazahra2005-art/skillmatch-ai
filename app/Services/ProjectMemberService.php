@@ -35,5 +35,28 @@ class ProjectMemberService
 
         return $member->load('user');
     }
+    public function getMembers(Project $project, Request $request)
+    {
+        if ($project->user_id !== $request->user()->id) {
+            abort(403, 'Vous ne pouvez pas consulter les membres de ce projet.');
+        }
+
+        return ProjectMember::with('user')
+            ->where('project_id', $project->id)
+            ->get();
+    }
+
+    public function removeMember(ProjectMember $member, Request $request)
+    {
+        if ($member->project->user_id !== $request->user()->id) {
+            abort(403, 'Vous ne pouvez pas retirer ce membre.');
+        }
+
+        $member->delete();
+
+        return response()->json([
+            'message' => 'Membre retiré du projet avec succès.'
+        ]);
+    }
 
 }

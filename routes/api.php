@@ -11,6 +11,7 @@ use App\Http\Controllers\ProjectMatchController;
 use App\Http\Controllers\ProjectMemberController;
 use App\Http\Controllers\ProjectRequestController;
 use App\Http\Controllers\ProjectSkillController;
+use App\Http\Controllers\TeamMatchController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -88,4 +89,13 @@ Route::post('/project-requests/{projectRequest}/accept', [ProjectRequestControll
     ->middleware('auth:sanctum');
 
 Route::post('/project-requests/{projectRequest}/reject', [ProjectRequestController::class, 'rejectRequest'])
+    ->middleware('auth:sanctum');
+
+Route::get('/projects/{project}/team-matches', [TeamMatchController::class, 'match'])
+    ->middleware('auth:sanctum');
+
+Route::get('/projects/{project}/members', [ProjectMemberController::class, 'getMembers'])
+    ->middleware('auth:sanctum');
+
+Route::delete('/project-members/{member}', [ProjectMemberController::class, 'removeMember'])
     ->middleware('auth:sanctum');
