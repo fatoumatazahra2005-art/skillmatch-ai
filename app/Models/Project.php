@@ -29,4 +29,14 @@ class Project extends Model
     {
         return $this->hasMany(ProjectMatch::class);
     }
+
+    public function members()
+    {
+        return $this->hasMany(ProjectMember::class);
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(ProjectRequest::class);
+    }
 }

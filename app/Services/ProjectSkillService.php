@@ -9,6 +9,10 @@ class ProjectSkillService
 {
     public function addSkill(Project $project, Request $request)
     {
+
+        if ($project->user_id !== $request->user()->id) {
+            abort(403, 'Vous ne pouvez pas modifier ce projet.');
+        }
         $validated = $request->validate([
             'skill_id' => 'required|exists:skills,id',
             'level' => 'required|string',

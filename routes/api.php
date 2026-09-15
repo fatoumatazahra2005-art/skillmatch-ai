@@ -8,6 +8,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSkillController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ProjectMatchController;
+use App\Http\Controllers\ProjectMemberController;
+use App\Http\Controllers\ProjectRequestController;
 use App\Http\Controllers\ProjectSkillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -72,3 +74,18 @@ Route::get(
     '/profiles/{profile}/project-matches',
     [ProjectMatchController::class, 'getByProfile']
 )->middleware('auth:sanctum');
+
+Route::post('/projects/{project}/members', [ProjectMemberController::class, 'addMember'])
+    ->middleware('auth:sanctum');
+
+Route::post('/projects/{project}/join', [ProjectRequestController::class, 'joinProject'])
+    ->middleware('auth:sanctum');
+
+Route::get('/projects/{project}/requests', [ProjectRequestController::class, 'getRequests'])
+    ->middleware('auth:sanctum');
+
+Route::post('/project-requests/{projectRequest}/accept', [ProjectRequestController::class, 'acceptRequest'])
+    ->middleware('auth:sanctum');
+
+Route::post('/project-requests/{projectRequest}/reject', [ProjectRequestController::class, 'rejectRequest'])
+    ->middleware('auth:sanctum');
