@@ -24,4 +24,11 @@ class Skill extends Model
             ->withPivot('level')
             ->withTimestamps();
     }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class, 'project_skills')
+            ->withPivot('level')
+            ->withTimestamps();
+    }
 }

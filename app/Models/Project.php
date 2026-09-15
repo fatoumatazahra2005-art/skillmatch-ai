@@ -4,19 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class Project extends Model
 {
-
     protected $fillable = [
         'user_id',
-        'bio',
-        'experience_years',
-        'education',
-        'github_url',
-        'linkedin_url',
+        'title',
+        'description',
         'location',
-        'availability',
+        'is_open',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -24,11 +21,11 @@ class Profile extends Model
 
     public function skills()
     {
-        return $this->belongsToMany(Skill::class, 'profile_skills')
-            ->withPivot('level', 'years_experience')
+        return $this->belongsToMany(Skill::class, 'project_skills')
+            ->withPivot('level')
             ->withTimestamps();
     }
-    public function projectMatches()
+    public function matches()
     {
         return $this->hasMany(ProjectMatch::class);
     }

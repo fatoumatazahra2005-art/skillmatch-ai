@@ -6,6 +6,9 @@ use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\OpportunitySkillController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfileSkillController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ProjectMatchController;
+use App\Http\Controllers\ProjectSkillController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,4 +50,25 @@ Route::get(
 Route::get(
     '/profiles/{profile}/job-matches',
     [JobMatchController::class, 'getByProfile']
+)->middleware('auth:sanctum');
+Route::post('/projects', [ProjectController::class, 'create'])
+    ->middleware('auth:sanctum');
+
+Route::get('/projects', [ProjectController::class, 'getAll']);
+
+Route::get('/projects/{project}', [ProjectController::class, 'getById']);
+
+Route::post(
+    '/projects/{project}/skills',
+    [ProjectSkillController::class, 'addSkill']
+)->middleware('auth:sanctum');
+
+Route::post(
+    '/profiles/{profile}/projects/{project}/match',
+    [ProjectMatchController::class, 'match']
+)->middleware('auth:sanctum');
+
+Route::get(
+    '/profiles/{profile}/project-matches',
+    [ProjectMatchController::class, 'getByProfile']
 )->middleware('auth:sanctum');
